@@ -57,6 +57,7 @@ function App() {
         <h1 className="title">Incubees Cinephile App</h1>
         <input
           type="text"
+          value={searchedMovie}
           placeholder="Search your favourite movie"
           onChange={(e) => setSearchedMovie(e.target.value)}
           className="search-bar"

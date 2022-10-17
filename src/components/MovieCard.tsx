@@ -4,25 +4,28 @@ function MovieCard({
   name,
   image,
   id,
-  releaseDate,
   onClick,
 }: {
   name: string;
   image: string;
   id: number;
-  releaseDate: string;
   onClick: () => void;
 }) {
   return (
     <>
-      <div className="container" onClick={onClick} role="button">
+      <div
+        className="container"
+        onClick={onClick}
+        role="button"
+        id={id.toString()}
+      >
         <p className="movieTitle">{name}</p>
         <img
           src={image}
           alt={name}
           onError={(e) =>
             (e.currentTarget.src =
-              "https://www.ncenet.com/wp-content/uploads/2020/04/No-image-found.jpg")
+              "https://d32qys9a6wm9no.cloudfront.net/images/movies/poster/500x735.png")
           }
         />
       </div>

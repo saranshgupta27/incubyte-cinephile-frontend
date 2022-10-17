@@ -1,7 +1,7 @@
-import React from "react";
+import * as React from "react";
 import MovieCard from "../components/MovieCard";
 import "@testing-library/jest-dom";
-import { render } from "react-testing-library";
+import { render, screen } from "@testing-library/react";
 
 const movieData = {
   name: "Movie Name",
@@ -11,9 +11,25 @@ const movieData = {
   onclick: () => null,
 };
 
-//test block
-test("renders without crashing", () => {
-  const div = document.createElement("div");
-  render(<p>HEHE</p>, div);
-  // render the component on virtual dom
+describe("Movie Card", function () {
+  it("should render without crash", function () {
+    let container = document.createElement("div");
+    document.body.appendChild(container);
+    render(<MovieCard {...movieData} />, container);
+  });
+});
+
+test("should have an image tag", () => {
+  render(<MovieCard {...movieData} />);
+  expect(screen.getByRole("img")).toBeInTheDocument();
+});
+
+test("should have a clickable role", () => {
+  render(<MovieCard {...movieData} />);
+  expect(screen.getByRole("img")).toBeInTheDocument();
+});
+
+test("should render correct movie name", () => {
+  render(<MovieCard {...movieData} />);
+  expect(screen.getByRole("button")).toHaveTextContent("Movie Name");
 });
