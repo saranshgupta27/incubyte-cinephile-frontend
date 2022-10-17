@@ -3,6 +3,8 @@ import { useState } from "react";
 import "./App.css";
 import MovieCard from "./components/MovieCard";
 import MovieDetailsCard from "./components/MovieDetailsCard";
+// import { worker } from "./mocks/browser";
+
 import {
   getMoviesByName,
   getMoviesDetails as getMovieDetails,
@@ -26,25 +28,28 @@ function App() {
 
   useEffect(() => {
     if (searchMovieTimer) clearTimeout(searchMovieTimer);
-
-    setSearchMovieTimer(
-      setTimeout(async () => {
-        setSelectedMovieId(null);
-        setSelectedMovieData(null);
-        const res = await getMoviesByName(searchedMovie);
-        setSearchedMovies(res.data);
-      }, 2000)
-    );
-  }, [searchMovieTimer, searchedMovie]);
+    const timerId = setTimeout(async () => {
+      setSelectedMovieId(null);
+      setSelectedMovieData(null);
+      const res = await getMoviesByName(searchedMovie);
+      setSearchedMovies(res.data);
+    }, 2000);
+    setSearchMovieTimer(timerId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchedMovie]);
 
   useEffect(() => {
-    if (selectedMovieId) getMovieDetailsById();
     async function getMovieDetailsById() {
       if (!selectedMovieId) return;
       const res = await getMovieDetails(selectedMovieId);
       setSelectedMovieData(res.data);
     }
+    if (selectedMovieId) getMovieDetailsById();
   }, [selectedMovieId]);
+
+  // useEffect(() => {
+  //   worker.start();
+  // }, []);
 
   return (
     <>
@@ -74,6 +79,7 @@ function App() {
               <MovieCard
                 key={item.id}
                 {...item}
+                image={`https://image.tmdb.org/t/p/original/${item.image}`}
                 onClick={() => setSelectedMovieId(item.id)}
               />
             ))}

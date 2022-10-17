@@ -13,13 +13,18 @@ function MovieCard({
   releaseDate: string;
   onClick: () => void;
 }) {
-  if (!image) return null;
-
   return (
     <>
       <div className="container" onClick={onClick} role="button">
         <p className="movieTitle">{name}</p>
-        <img src={`https://image.tmdb.org/t/p/original/${image}`} alt={name} />
+        <img
+          src={image}
+          alt={name}
+          onError={(e) =>
+            (e.currentTarget.src =
+              "https://www.ncenet.com/wp-content/uploads/2020/04/No-image-found.jpg")
+          }
+        />
       </div>
       <style jsx>{`
         .container {
@@ -32,6 +37,7 @@ function MovieCard({
         }
         .container:hover {
           outline: 2px solid white;
+          transform: scale(1.05);
         }
         img {
           width: 200px;

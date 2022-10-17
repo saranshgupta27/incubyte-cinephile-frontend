@@ -11,7 +11,7 @@ function MovieDetailsCard({
   overview: string;
   originalLanguage: string;
   duration: number;
-  image: string;
+  image?: string;
   name?: string;
 }) {
   return (
