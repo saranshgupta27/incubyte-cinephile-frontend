@@ -7,7 +7,7 @@ const movieData = {
   name: "Movie Name",
   id: 12,
   releaseDate: "12-10-2022",
-  image: "/sdsd",
+  image: "/movieImage",
   onclick: () => null,
 };
 
@@ -24,12 +24,18 @@ test("should have an image tag", () => {
   expect(screen.getByRole("img")).toBeInTheDocument();
 });
 
-test("should have a clickable role", () => {
-  render(<MovieCard {...movieData} />);
-  expect(screen.getByRole("img")).toBeInTheDocument();
-});
+// test("should have a clickable role", () => {
+//   render(<MovieCard {...movieData} />);
+//   expect(screen.getByRole("img")).toBeInTheDocument();
+// });
 
 test("should render correct movie name", () => {
   render(<MovieCard {...movieData} />);
   expect(screen.getByRole("button")).toHaveTextContent("Movie Name");
+});
+
+test("should render a movie card as a button which is not disabled", () => {
+  render(<MovieCard {...movieData} />);
+  const movieCard = screen.getByRole("button");
+  expect(movieCard).toBeEnabled();
 });
